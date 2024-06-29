@@ -4,7 +4,7 @@ import api from '@/api/api';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { fetchUser } from '@/helpers/fetchUser';
+// import { fetchUser } from '@/helpers/fetchUser';
 
 interface BlogProps {
   params: {
@@ -31,7 +31,7 @@ const Blog: React.FC<BlogProps> = ({ params }) => {
   const [blog, setBlog] = useState<Blog | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
-  const [userName, setUserName] = useState<string>('Loading...');
+  // const [userName, setUserName] = useState<string>('Loading...');
 
   useEffect(() => {
     const fetchDataBlog = async () => {
@@ -60,15 +60,16 @@ const Blog: React.FC<BlogProps> = ({ params }) => {
     fetchComments();
   }, [params.id]);
 
-  useEffect(() => {
-    if (blog?.user_id) {
-      const getUser = async () => {
-        const name = await fetchUser(blog.user_id);
-        setUserName(name);
-      };
-      getUser();
-    }
-  }, [blog?.user_id]);
+  // useEffect(() => {
+  //   if (blog?.user_id) {
+  //     const getUser = async () => {
+  //       const name = await fetchUser(blog.user_id);
+  //       setUserName(name);
+  //     };
+  //     getUser();
+  //   }
+  // }, [blog?.user_id]);
+  // di hide karena terdapat error pada API
 
   if (loading) {
     return (
@@ -96,7 +97,7 @@ const Blog: React.FC<BlogProps> = ({ params }) => {
       </div>
       <div className='text-center bg-white rounded-lg p-4'>
         <h1 className='font-bold text-xl'>{blog.title}</h1>
-        <h3>{userName}</h3>
+        {/* <h3>{userName}</h3> */}
         <hr />
         <div className='p-2'>
           <p>{blog.body}</p>

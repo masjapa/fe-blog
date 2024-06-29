@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { fetchUser } from '@/helpers/fetchUser';
+// import { fetchUser } from '@/helpers/fetchUser';
 
 interface CardProps {
   id: string;
@@ -14,13 +14,14 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ id, userId, title, body }) => {
   const [userName, setUserName] = useState<string>('Loading...');
 
-  useEffect(() => {
-    const getUser = async () => {
-      const name = await fetchUser(userId);
-      setUserName(name);
-    };
-    getUser();
-  }, [userId]);
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     const name = await fetchUser(userId);
+  //     setUserName(name);
+  //   };
+  //   getUser();
+  // }, [userId]);
+  // di hide karena terdapat error pada API
 
   return (
     <Link href={`/blog/${id}`}>
@@ -30,7 +31,8 @@ const Card: React.FC<CardProps> = ({ id, userId, title, body }) => {
         <section>
           <div>{body}</div>
           <div>
-            <div>Posted by: {userName}</div>
+            {/* <div>Posted by: {userName}</div> */}
+            {/* di hide karena terdapat error pada API */}
           </div>
         </section>
       </div>
