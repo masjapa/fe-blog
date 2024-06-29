@@ -3,7 +3,7 @@
 import api from '@/api/api';
 import UserCard from '@/components/Card/UserCard';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 type User = {
   id: string;
@@ -20,27 +20,28 @@ const Users = () => {
   const [pageSize] = useState(9);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const fetchUsers = async () => {
-    setLoading(true);
-    try {
-      const response = await api.get(`/users`, {
-        params: {
-          page: currentPage,
-          per_page: pageSize,
-          name: searchQuery 
-        }
-      });
-      setUsers(response.data);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const fetchUsers = useCallback(
+    async () => {
+      setLoading(true);
+      try {
+        const response = await api.get(`/users`, {
+          params: {
+            page: currentPage,
+            per_page: pageSize,
+            name: searchQuery
+          }
+        });
+        setUsers(response.data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      } finally {
+        setLoading(false);
+      }
+    }, [currentPage, pageSize, searchQuery]);
 
   useEffect(() => {
     fetchUsers();
-  }, [currentPage, searchQuery]);
+  }, [currentPage, searchQuery, fetchUsers]);
 
   const handlePrev = () => {
     if (currentPage > 1) {

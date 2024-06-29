@@ -5,7 +5,6 @@ export const fetchUser = async (userId: string) => {
     const response = await api.get(`/users/${userId}`);
     return response.data.name;
   } catch (error) {
-    console.error('Error fetching user:', error);
-    return 'Unknown User';
+    return 'Anonymous';
   }
 };

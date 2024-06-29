@@ -17,21 +17,21 @@ const Home: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(5);
 
-  const fetchPosts = async (page: number) => {
-    setLoading(true);
-    try {
-      const response = await api.get(`/posts?page=${page}&per_page=${pageSize}`);
-      setPosts(response.data);
-    } catch (error) {
-      console.error('Error fetching posts:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchPosts = async (page: number) => {
+      setLoading(true);
+      try {
+        const response = await api.get(`/posts?page=${page}&per_page=${pageSize}`);
+        setPosts(response.data);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
     fetchPosts(currentPage);
-  }, [currentPage]);
+  }, [currentPage, pageSize]); 
 
   const handlePrev = () => {
     if (currentPage > 1) {

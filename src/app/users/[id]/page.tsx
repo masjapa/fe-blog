@@ -3,6 +3,7 @@
 import api from '@/api/api';
 import Card from '@/components/Card/Card';
 import UserForm from '@/components/Form/UserForm';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 interface UserProps {
@@ -19,6 +20,7 @@ interface Post {
 
 const Users: React.FC<UserProps> = ({ params }) => {
   const [post, setPost] = useState<Post[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchDataPost = async () => {
@@ -30,10 +32,17 @@ const Users: React.FC<UserProps> = ({ params }) => {
       }
     };
     fetchDataPost();
-  }, []);
+  }, [params.id]);
+
+  const handleBack = () => {
+    router.back();
+  };
 
   return (
     <>
+      <button className='hover:underline font-bold my-4' onClick={handleBack}>
+        &larr; Back
+      </button>
       <UserForm params={{ id: params.id }} />
       <div className='bg-white p-4 rounded-lg my-3'>
         <h1 className='font-bold text-md'>Posted blog</h1>
